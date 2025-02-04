@@ -3,8 +3,7 @@ require_once 'Controller/UserController.php';
 
 $url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $segments = explode('/', $url);
-$lastSegment = end($segments); // Récupère le dernier segment (ID)
-
+$lastSegment = end($segments); 
 class Route {
     private $controller;
     
@@ -12,27 +11,35 @@ class Route {
         $this->controller = new UserController();
     }
     
-    public function runAction($action, $id){
-        echo "hh";
-    
-        $validActions = ['read', 'delete', 'update'];  // Liste des actions valides
+    public function runAction($action, $id){    
+        $validActions = ['read', 'delete', 'update']; 
         if (in_array($action, $validActions)) {
             $theAction = $action . 'Controller';
             $this->controller->$theAction($_GET["id"]);
         } else {
-          $result =  $this->controller->readController($id);  
-          require_once 'View/patient.php';
+          return  $this->controller->readController($id);  
 
         }
     }
     
     public function getAction($action, $id){
 
-        $this->runAction($action, $id);
+        $result =  $this->runAction($action, $id);
+       if($result){
         require_once 'View/patient.php';
+
+       }else {
+        require_once 'View/page404.php';
+       }
 
     }
 }
 
 $route = new Route();
-$route->getAction($_GET['action'], $lastSegment);
+
+if(isset($_GET["action"])){
+    $action = $_GET["action"];
+} else {
+    $action = "home";
+}
+$route->getAction($action, $lastSegment);
