@@ -25,12 +25,7 @@ class Route {
     public function getAction($action, $id){
 
         $result =  $this->runAction($action, $id);
-       if($result){
-        require_once 'View/patient.php';
-
-       }else {
-        require_once 'View/page404.php';
-       }
+      
 
     }
 }

@@ -4,20 +4,27 @@ include_once 'model/user.php';
 include_once 'config/Database.php';
 
 class UserController {
-    public $db;
+    private  $user;
     public function __construct(){
-        $this->db = Database::getInstance();
+   
+        $this->user = new User(null, null);
     }
 
 
 public function readController($id){
-    $user = new User($this->db, null);
     
-    return $user->read($id);
+    $result =  $this->user->read($id);
+    if(!$result){
+        require_once 'View/page404.php';
+       }else{
+
+           require_once 'View/patient.php';
+       }
+
 }
 public function deleteController($id){
-    $user = new User($this->db, null);
+   
     
-    return $user->delete($id);
+    return $this->user->delete($id);
 }
 }

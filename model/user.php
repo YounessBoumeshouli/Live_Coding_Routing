@@ -11,8 +11,8 @@ include_once 'config/Database.php';
     protected $status;
     
     public function __construct($db, $userData = null) {
-        $this->db = $db;
-        if ($userData) {
+        $this->db = Database::getInstance();
+                if ($userData) {
             $this->id = $userData['id'];
             $this->username = $userData['username'];
             $this->email = $userData['email'];
