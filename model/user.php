@@ -44,11 +44,15 @@ include_once 'config/Database.php';
     }
 
     public function read($id) {
+        if (is_numeric($id)) {
         $sql = "SELECT * FROM users WHERE id_user = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+        }else {
+            return false;
+        }
     }
 
     public function delete($id) {

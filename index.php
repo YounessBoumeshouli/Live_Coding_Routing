@@ -3,22 +3,22 @@ require_once 'Controller/UserController.php';
 
 $url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 $segments = explode('/', $url);
+$controller = $segments[2] ;
+echo $controller;
 $lastSegment = end($segments); 
+
 class Route {
     private $controller;
-    
     public function __construct(){
         $this->controller = new UserController();
     }
     
     public function runAction($action, $id){    
-        $validActions = ['read', 'delete', 'update']; 
+        $validActions = [ 'delete', 'update']; 
         if (in_array($action, $validActions)) {
-            $theAction = $action . 'Controller';
-            $this->controller->$theAction($_GET["id"]);
+            $this->controller->$action($_GET["id"]);
         } else {
-          return  $this->controller->readController($id);  
-
+          return  $this->controller->read($id);  
         }
     }
     

@@ -11,7 +11,7 @@ class UserController {
     }
 
 
-public function readController($id){
+public function read($id){
     
     $result =  $this->user->read($id);
     if(!$result){
@@ -19,12 +19,12 @@ public function readController($id){
        }else{
 
            require_once 'View/patient.php';
-       }
+       }    
 
 }
-public function deleteController($id){
+public function delete($id){
    
     
-    return $this->user->delete($id);
+     $this->user->delete($id);
 }
 }
